@@ -1,7 +1,8 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Павел Зырянов](https://up.htmlacademy.ru/javascript/12/user/252959).
-* Наставник: `Неизвестно`.
+* Наставник: `Андрей Соколов`
+(https://up.htmlacademy.ru/javascript/12/user/202891).
 
 ---
 
