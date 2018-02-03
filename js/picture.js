@@ -2,11 +2,8 @@
 
 var photosArray = [];
 var urlPhotosArray = [];
-
-for (var i = 1; i <= 25; i++) {
-  urlPhotosArray.push('photos/{{' + i + '}}.jpg');
-}
-
+var minCountLikes = 15;
+var maxCountLikes = 200;
 var commentsArray = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
@@ -15,9 +12,14 @@ var commentsArray = [
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
+var pictureTemplate = document.querySelector('#picture-template').content.querySelector('.picture');
+var pictures = document.querySelector('.pictures');
+var fragment = document.createDocumentFragment();
 
-var minCountLikes = 15;
-var maxCountLikes = 200;
+for (var i = 1; i <= 25; i++) {
+  urlPhotosArray.push('photos/' + i + '.jpg');
+}
+
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -35,7 +37,22 @@ for (i = 0; i < countUsers; i++) {
       {
         url: getRandomPhoto(0, urlPhotosArray.length - 1),
         likes: getRandomInt(minCountLikes, maxCountLikes),
-        comments: commentsArray[getRandomInt(0, commentsArray.length - 1)]
+        comments: [
+          commentsArray[getRandomInt(0, commentsArray.length - 1)]
+        ]
       }
   );
 }
+
+function renderPictures(photos) {
+  var picture = pictureTemplate.cloneNode(true);
+  picture.querySelector('img').src = photos.url;
+  picture.querySelector('.picture-likes').textContent = photos.likes;
+  picture.querySelector('.picture-comments').textContent = photos.comments.length;
+  return picture;
+}
+
+for (i = 0; i < photosArray.length; i++) {
+  fragment.appendChild(renderPictures(photosArray[i]));
+}
+pictures.appendChild(fragment);
