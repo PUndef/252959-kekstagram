@@ -15,6 +15,7 @@ var commentsArray = [
 var pictureTemplate = document.querySelector('#picture-template').content.querySelector('.picture');
 var pictures = document.querySelector('.pictures');
 var fragment = document.createDocumentFragment();
+var galleryOverlay = document.querySelector('.gallery-overlay');
 
 for (var i = 1; i <= 25; i++) {
   urlPhotosArray.push('photos/' + i + '.jpg');
@@ -56,3 +57,8 @@ for (i = 0; i < photosArray.length; i++) {
   fragment.appendChild(renderPictures(photosArray[i]));
 }
 pictures.appendChild(fragment);
+
+galleryOverlay.classList.remove('hidden');
+galleryOverlay.querySelector('.gallery-overlay-image').src = photosArray[0].url;
+galleryOverlay.querySelector('.likes-count').textContent = photosArray[0].likes;
+galleryOverlay.querySelector('.comments-count').textContent = photosArray[0].comments.length;
