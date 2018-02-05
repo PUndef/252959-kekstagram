@@ -1,7 +1,6 @@
 'use strict';
 
 var photosArray = [];
-var urlPhotosArray = [];
 var minCountLikes = 15;
 var maxCountLikes = 200;
 var commentsArray = [
@@ -17,19 +16,8 @@ var pictures = document.querySelector('.pictures');
 var fragment = document.createDocumentFragment();
 var galleryOverlay = document.querySelector('.gallery-overlay');
 
-for (var i = 1; i <= 25; i++) {
-  urlPhotosArray.push('photos/' + i + '.jpg');
-}
-
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function getRandomPhoto(min, max) {
-  var numberPhoto = getRandomInt(min, max);
-  var swap = urlPhotosArray[numberPhoto];
-  urlPhotosArray.splice(numberPhoto, 1);
-  return swap;
 }
 
 function getRandomComments(inputCommentsArray, countForOutput) {
@@ -41,10 +29,10 @@ function getRandomComments(inputCommentsArray, countForOutput) {
 }
 
 var countUsers = 25;
-for (i = 0; i < countUsers; i++) {
+for (var i = 1; i < countUsers + 1; i++) {
   photosArray.push(
       {
-        url: getRandomPhoto(0, urlPhotosArray.length - 1),
+        url: 'photos/' + i + '.jpg',
         likes: getRandomInt(minCountLikes, maxCountLikes),
         comments: getRandomComments(commentsArray, getRandomInt(1, 2))
       }
