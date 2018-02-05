@@ -32,15 +32,21 @@ function getRandomPhoto(min, max) {
   return swap;
 }
 
+function getRandomComments(inputCommentsArray, countForOutput) {
+  var comments = [];
+  for (var j = 0; j < countForOutput; j++) {
+    comments.push(inputCommentsArray[getRandomInt(0, inputCommentsArray.length - 1)]);
+  }
+  return comments;
+}
+
 var countUsers = 25;
 for (i = 0; i < countUsers; i++) {
   photosArray.push(
       {
         url: getRandomPhoto(0, urlPhotosArray.length - 1),
         likes: getRandomInt(minCountLikes, maxCountLikes),
-        comments: [
-          commentsArray[getRandomInt(0, commentsArray.length - 1)]
-        ]
+        comments: getRandomComments(commentsArray, getRandomInt(1, 2))
       }
   );
 }
