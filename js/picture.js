@@ -1,5 +1,8 @@
 'use strict';
 
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+
 var photosArray = [];
 var minCountLikes = 15;
 var maxCountLikes = 200;
@@ -15,6 +18,11 @@ var pictureTemplate = document.querySelector('#picture-template').content.queryS
 var pictures = document.querySelector('.pictures');
 var fragment = document.createDocumentFragment();
 var galleryOverlay = document.querySelector('.gallery-overlay');
+var upload = document.querySelector('#upload-file');
+var uploadOverlay = document.querySelector('.upload-overlay');
+var uploadClose = document.querySelector('#upload-cancel');
+var uploadFormHashtags = document.querySelector('.upload-form-hashtags');
+var uploadFormDescription = document.querySelector('.upload-form-description');
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -52,7 +60,48 @@ for (i = 0; i < photosArray.length; i++) {
 }
 pictures.appendChild(fragment);
 
-galleryOverlay.classList.remove('hidden');
-galleryOverlay.querySelector('.gallery-overlay-image').src = photosArray[0].url;
-galleryOverlay.querySelector('.likes-count').textContent = photosArray[0].likes;
-galleryOverlay.querySelector('.comments-count').textContent = photosArray[0].comments.length;
+function openGalleryOverlay() {
+  galleryOverlay.classList.remove('hidden');
+  galleryOverlay.querySelector('.gallery-overlay-image').src = photosArray[0].url;
+  galleryOverlay.querySelector('.likes-count').textContent = photosArray[0].likes;
+  galleryOverlay.querySelector('.comments-count').textContent = photosArray[0].comments.length;
+}
+
+var onUploadPopupEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closeUploadPopup();
+  }
+};
+
+function stopCloseEscPress(evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    evt.stopPropagation();
+  }
+}
+
+uploadFormHashtags.addEventListener('keydown', function (evt) {
+  stopCloseEscPress(evt);
+});
+
+uploadFormDescription.addEventListener('keydown', function (evt) {
+  stopCloseEscPress(evt);
+});
+
+function openUploadOverlay() {
+  uploadOverlay.classList.remove('hidden');
+  document.addEventListener('keydown', onUploadPopupEscPress);
+}
+
+upload.addEventListener('change', function (evt) {
+  evt.preventDefault();
+  openUploadOverlay();
+});
+
+function closeUploadPopup() {
+  upload.value = '';
+  uploadOverlay.classList.add('hidden');
+}
+
+uploadClose.addEventListener('click', function () {
+  closeUploadPopup();
+});
