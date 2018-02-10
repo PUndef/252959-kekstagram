@@ -30,6 +30,13 @@ var uploadEffectLevelPin = document.querySelector('.upload-effect-level-pin');
 var effectImagePreview = document.querySelector('.effect-image-preview');
 var uploadEffectControls = document.querySelector('.upload-effect-controls');
 
+var stepResizeValue = 25;
+var uploadResizeValue = document.querySelector('.upload-resize-controls-value');
+var uploadResizeMinValue = 25;
+var uploadResizeMaxValue = 100;
+var decreaseUploadImageSize = document.querySelector('.upload-resize-controls-button-dec');
+var increaseUploadImageSize = document.querySelector('.upload-resize-controls-button-inc');
+
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -156,5 +163,21 @@ uploadEffectControls.addEventListener('click', function (evt) {
   var selectElement = evt.toElement;
   if (selectElement.value) {
     setNewEffect(evt.toElement.value);
+  }
+});
+
+decreaseUploadImageSize.addEventListener('click', function () {
+  var currentUploadResizeValue = parseInt(uploadResizeValue.value, 10);
+  if (currentUploadResizeValue > uploadResizeMinValue) {
+    currentUploadResizeValue -= stepResizeValue;
+    uploadResizeValue.value = currentUploadResizeValue + '%';
+  }
+});
+
+increaseUploadImageSize.addEventListener('click', function () {
+  var currentUploadResizeValue = parseInt(uploadResizeValue.value, 10);
+  if (currentUploadResizeValue < uploadResizeMaxValue) {
+    currentUploadResizeValue += stepResizeValue;
+    uploadResizeValue.value = currentUploadResizeValue + '%';
   }
 });
