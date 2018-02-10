@@ -20,6 +20,7 @@ var pictureTemplate = document.querySelector('#picture-template').content.queryS
 var pictures = document.querySelector('.pictures');
 var fragment = document.createDocumentFragment();
 var galleryOverlay = document.querySelector('.gallery-overlay');
+var galleryOverlayClose = document.querySelector('.gallery-overlay-close');
 var upload = document.querySelector('#upload-file');
 var uploadOverlay = document.querySelector('.upload-overlay');
 var uploadClose = document.querySelector('#upload-cancel');
@@ -37,17 +38,17 @@ var uploadResizeMaxValue = 100;
 var decreaseUploadImageSize = document.querySelector('.upload-resize-controls-button-dec');
 var increaseUploadImageSize = document.querySelector('.upload-resize-controls-button-inc');
 
-function getRandomInt(min, max) {
+var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
-function getRandomComments(inputCommentsArray, countForOutput) {
+var getRandomComments = function (inputCommentsArray, countForOutput) {
   var comments = [];
   for (var j = 0; j < countForOutput; j++) {
     comments.push(inputCommentsArray[getRandomInt(0, inputCommentsArray.length - 1)]);
   }
   return comments;
-}
+};
 
 var countUsers = 25;
 for (var i = 1; i < countUsers + 1; i++) {
@@ -60,60 +61,67 @@ for (var i = 1; i < countUsers + 1; i++) {
   );
 }
 
-function renderPictures(photos) {
+var renderPictures = function (photos) {
   var picture = pictureTemplate.cloneNode(true);
   picture.querySelector('img').src = photos.url;
   picture.querySelector('.picture-likes').textContent = photos.likes;
   picture.querySelector('.picture-comments').textContent = photos.comments.length;
   return picture;
-}
+};
 
 for (i = 0; i < photosArray.length; i++) {
   fragment.appendChild(renderPictures(photosArray[i]));
 }
 pictures.appendChild(fragment);
 
-function openGalleryOverlay() {
+var openGalleryOverlay = function (src, likes, comments) {
+  document.addEventListener('keydown', onPopupEscPress);
   galleryOverlay.classList.remove('hidden');
-  galleryOverlay.querySelector('.gallery-overlay-image').src = photosArray[0].url;
-  galleryOverlay.querySelector('.likes-count').textContent = photosArray[0].likes;
-  galleryOverlay.querySelector('.comments-count').textContent = photosArray[0].comments.length;
-}
+  galleryOverlay.querySelector('.gallery-overlay-image').src = src;
+  galleryOverlay.querySelector('.likes-count').textContent = likes;
+  galleryOverlay.querySelector('.comments-count').textContent = comments;
+};
 
-var onUploadPopupEscPress = function (evt) {
+var onPopupEscPress = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
+    closePopup();
     closeUploadPopup();
   }
 };
 
-function stopCloseEscPress(evt) {
+var stopCloseEscPress = function (evt) {
   if (evt.keyCode === ESC_KEYCODE) {
     evt.stopPropagation();
   }
-}
+};
 
 uploadFormHashtags.addEventListener('keydown', function (evt) {
   stopCloseEscPress(evt);
 });
-
 uploadFormDescription.addEventListener('keydown', function (evt) {
   stopCloseEscPress(evt);
 });
 
-function openUploadOverlay() {
-  uploadOverlay.classList.remove('hidden');
-  document.addEventListener('keydown', onUploadPopupEscPress);
-}
+var closePopup = function () {
+  galleryOverlay.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+var closeUploadPopup = function () {
+  upload.value = '';
+  uploadOverlay.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+var openPopup = function (elem) {
+  elem.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
 
 upload.addEventListener('change', function (evt) {
   evt.preventDefault();
-  openUploadOverlay();
+  openPopup(uploadOverlay);
 });
-
-function closeUploadPopup() {
-  upload.value = '';
-  uploadOverlay.classList.add('hidden');
-}
 
 uploadClose.addEventListener('click', function () {
   closeUploadPopup();
@@ -127,7 +135,7 @@ uploadEffectLevelPin.addEventListener('mouseup', function () {
   }
 });
 
-function setNewEffectLevel(levelEffect, nameEffect) {
+var setNewEffectLevel = function (levelEffect, nameEffect) {
   if (nameEffect === 'none') {
     effectImagePreview.style.filter = 'none';
   }
@@ -146,9 +154,9 @@ function setNewEffectLevel(levelEffect, nameEffect) {
   if (nameEffect === 'heat') {
     document.querySelector('.effect-heat').style.filter = 'brightness(' + levelEffect * PROPORTION_3 + ')';
   }
-}
+};
 
-function setNewEffect(nameEffect) {
+var setNewEffect = function (nameEffect) {
   effectImagePreview.className = '';
   effectImagePreview.classList.add('effect-image-preview', 'effect-' + nameEffect);
 
@@ -157,7 +165,7 @@ function setNewEffect(nameEffect) {
   if (nameEffect === 'none') {
     uploadEffectLevel.classList.add('hidden');
   }
-}
+};
 
 uploadEffectControls.addEventListener('click', function (evt) {
   var selectElement = evt.toElement;
@@ -166,10 +174,10 @@ uploadEffectControls.addEventListener('click', function (evt) {
   }
 });
 
-function changeUploadImagesSize(currentUploadResizeValue) {
+var changeUploadImagesSize = function (currentUploadResizeValue) {
   uploadResizeValue.value = currentUploadResizeValue + '%';
   effectImagePreview.style.transform = 'scale(' + currentUploadResizeValue / 100 + ')';
-}
+};
 
 decreaseUploadImageSize.addEventListener('click', function () {
   var currentUploadResizeValue = parseInt(uploadResizeValue.value, 10);
@@ -185,4 +193,17 @@ increaseUploadImageSize.addEventListener('click', function () {
     currentUploadResizeValue += stepResizeValue;
     changeUploadImagesSize(currentUploadResizeValue);
   }
+});
+
+pictures.addEventListener('click', function (evt) {
+  evt.preventDefault();
+  var elem = evt.target;
+  var comments = elem.nextElementSibling.querySelector('.picture-comments').textContent;
+  var likes = elem.nextElementSibling.querySelector('.picture-likes').textContent;
+  var src = evt.target.getAttribute('src');
+  openGalleryOverlay(src, likes, comments);
+});
+
+galleryOverlayClose.addEventListener('click', function () {
+  closePopup();
 });
