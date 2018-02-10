@@ -166,11 +166,16 @@ uploadEffectControls.addEventListener('click', function (evt) {
   }
 });
 
+function changeUploadImagesSize(currentUploadResizeValue) {
+  uploadResizeValue.value = currentUploadResizeValue + '%';
+  effectImagePreview.style.transform = 'scale(' + currentUploadResizeValue / 100 + ')';
+}
+
 decreaseUploadImageSize.addEventListener('click', function () {
   var currentUploadResizeValue = parseInt(uploadResizeValue.value, 10);
   if (currentUploadResizeValue > uploadResizeMinValue) {
     currentUploadResizeValue -= stepResizeValue;
-    uploadResizeValue.value = currentUploadResizeValue + '%';
+    changeUploadImagesSize(currentUploadResizeValue);
   }
 });
 
@@ -178,6 +183,6 @@ increaseUploadImageSize.addEventListener('click', function () {
   var currentUploadResizeValue = parseInt(uploadResizeValue.value, 10);
   if (currentUploadResizeValue < uploadResizeMaxValue) {
     currentUploadResizeValue += stepResizeValue;
-    uploadResizeValue.value = currentUploadResizeValue + '%';
+    changeUploadImagesSize(currentUploadResizeValue);
   }
 });
