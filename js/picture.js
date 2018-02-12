@@ -38,6 +38,9 @@ var uploadResizeMaxValue = 100;
 var decreaseUploadImageSize = document.querySelector('.upload-resize-controls-button-dec');
 var increaseUploadImageSize = document.querySelector('.upload-resize-controls-button-inc');
 
+var maxCountHastags = 5;
+var maxLengthHashtag = 20;
+
 var getRandomInt = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
@@ -206,4 +209,42 @@ pictures.addEventListener('click', function (evt) {
 
 galleryOverlayClose.addEventListener('click', function () {
   closePopup();
+});
+
+var validateHashtags = function () {
+  var hashtags = uploadFormHashtags.value;
+  var arrayHashtags = hashtags.trim().split(' ');
+  var countFailed = 0;
+  for (i = 0; i < arrayHashtags.length; i++) {
+    arrayHashtags[i] = arrayHashtags[i].toLowerCase();
+    if (arrayHashtags[i].charAt(0) !== '#') {
+      countFailed++;
+      uploadFormHashtags.setCustomValidity('Хэш-тег должен начинаться с символа #');
+    }
+    if (arrayHashtags[i].length > maxLengthHashtag) {
+      countFailed++;
+      uploadFormHashtags.setCustomValidity('Максимальная длина хэш-тега ' + maxLengthHashtag + ' символов');
+    }
+    if (arrayHashtags[i].split('#').length - 1 > 1) {
+      countFailed++;
+      uploadFormHashtags.setCustomValidity('Напишите, пожалуйста, ваши хэш-теги через пробел');
+    }
+    for (var j = 0; j < arrayHashtags.length; j++) {
+      if (arrayHashtags[i] === arrayHashtags[j] && i !== j) {
+        countFailed++;
+        uploadFormHashtags.setCustomValidity('Хэш-теги не должны повторяться (регистр тегов не имеет значения)');
+      }
+    }
+  }
+  if (arrayHashtags.length > maxCountHastags) {
+    countFailed++;
+    uploadFormHashtags.setCustomValidity('Максимум можно добавить ' + maxCountHastags + ' хэш-тегов');
+  }
+  if (countFailed === 0) {
+    uploadFormHashtags.setCustomValidity('');
+  }
+};
+
+uploadFormHashtags.addEventListener('keyup', function () {
+  validateHashtags();
 });
