@@ -28,6 +28,7 @@ var uploadFormHashtags = document.querySelector('.upload-form-hashtags');
 var uploadFormDescription = document.querySelector('.upload-form-description');
 var uploadEffectLevel = document.querySelector('.upload-effect-level');
 var uploadEffectLevelPin = document.querySelector('.upload-effect-level-pin');
+var uploadEffectLevelVal = document.querySelector('.upload-effect-level-val');
 var effectImagePreview = document.querySelector('.effect-image-preview');
 var uploadEffectControls = document.querySelector('.upload-effect-controls');
 
@@ -164,6 +165,8 @@ var setNewEffect = function (nameEffect) {
   effectImagePreview.classList.add('effect-image-preview', 'effect-' + nameEffect);
 
   setNewEffectLevel(DEFAULT_LEVEL_EFFECT, nameEffect);
+  uploadEffectLevelPin.style.left = DEFAULT_LEVEL_EFFECT + '%';
+  uploadEffectLevelVal.style.width = DEFAULT_LEVEL_EFFECT + '%';
   uploadEffectLevel.classList.remove('hidden');
   if (nameEffect === 'none') {
     uploadEffectLevel.classList.add('hidden');
