@@ -14,14 +14,10 @@
       document.removeEventListener('keydown', window.popup.onPopupEscPress);
     },
     onPopupEscPress: function (evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        window.popup.closePopup();
-      }
+      window.util.isEscEvent(evt, window.popup.closePopup);
     },
     onUploadPopupEscPress: function (evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        window.popupUpload.closeUploadPopup();
-      }
+      window.util.isEscEvent(evt, window.popup.closeUploadPopup);
     },
     stopCloseEscPress: function (evt) {
       if (evt.keyCode === ESC_KEYCODE) {
