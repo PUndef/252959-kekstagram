@@ -17,7 +17,7 @@
       window.util.isEscEvent(evt, window.popup.closePopup);
     },
     onUploadPopupEscPress: function (evt) {
-      window.util.isEscEvent(evt, window.popup.closeUploadPopup);
+      window.util.isEscEvent(evt, window.popupUpload.closeUploadPopup);
     },
     stopCloseEscPress: function (evt) {
       if (evt.keyCode === ESC_KEYCODE) {
