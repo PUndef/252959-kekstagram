@@ -5,6 +5,7 @@
   var PROPORTION_3 = 3 / 100;
   var effectImagePreview = document.querySelector('.effect-image-preview');
   var uploadEffectLevel = document.querySelector('.upload-effect-level');
+  var uploadEffectLevelValue = document.querySelector('.upload-effect-level-value');
 
   window.imageChange = {
     setNewEffectLevel: function (levelEffect, nameEffect) {
@@ -26,6 +27,13 @@
       }
       if (nameEffect === 'heat') {
         document.querySelector('.effect-heat').style.filter = 'brightness(' + levelEffect * PROPORTION_3 + ')';
+      }
+    },
+    updateEffectLevel: function () {
+      if (effectImagePreview.classList[1]) {
+        var currentEffect = effectImagePreview.classList[1].replace('effect-', '');
+        var currentLevel = uploadEffectLevelValue.value;
+        window.imageChange.setNewEffectLevel(currentLevel, currentEffect);
       }
     }
   };

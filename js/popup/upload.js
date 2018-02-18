@@ -9,9 +9,6 @@
   var upload = document.querySelector('#upload-file');
   var uploadOverlay = document.querySelector('.upload-overlay');
   var uploadClose = document.querySelector('#upload-cancel');
-  var uploadEffectLevelPin = document.querySelector('.upload-effect-level-pin');
-
-  var effectImagePreview = document.querySelector('.effect-image-preview');
 
   upload.addEventListener('change', function (evt) {
     evt.preventDefault();
@@ -20,14 +17,6 @@
 
   uploadClose.addEventListener('click', function () {
     window.popupUpload.closeUploadPopup();
-  });
-
-  uploadEffectLevelPin.addEventListener('mouseup', function () {
-    if (effectImagePreview.classList[1]) {
-      var currentEffect = effectImagePreview.classList[1].replace('effect-', '');
-      var currentLevel = parseInt(uploadEffectLevelPin.style.left, 10);
-      window.imageChange.setNewEffectLevel(currentLevel, currentEffect);
-    }
   });
 
   window.popupUpload = {
