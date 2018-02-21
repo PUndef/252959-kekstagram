@@ -10,7 +10,7 @@
   var description = document.querySelector('textarea[name="description"]');
 
   var onError = function () {
-    console.log('message');
+    // console.log('message');
   };
 
   window.data = {
