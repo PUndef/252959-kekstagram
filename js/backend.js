@@ -1,7 +1,8 @@
 'use strict';
 
 (function () {
-  window.load = function (url, onSuccess, onError) {
+
+  window.load = function (method, url, onSuccess, onError, boundary, body) {
     var xhr = new XMLHttpRequest();
 
     xhr.responseType = 'json';
@@ -24,8 +25,13 @@
 
     xhr.timeout = 10000; // 10s
 
-    xhr.open('GET', url);
-    xhr.send();
+    xhr.open(method, url);
+    if (method === 'POST') {
+      xhr.setRequestHeader('Content-Type', 'multipart/form-data; boundary=' + boundary);
+      xhr.send(body);
+    } else {
+      xhr.send();
+    }
   };
 
 })();
