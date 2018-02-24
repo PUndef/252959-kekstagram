@@ -3,14 +3,10 @@
 (function () {
 
   var pictures = document.querySelector('.pictures');
-  var fragment = document.createDocumentFragment();
   var galleryOverlay = document.querySelector('.gallery-overlay');
   var galleryOverlayClose = document.querySelector('.gallery-overlay-close');
 
-  for (var i = 0; i < window.data.photosArray.length; i++) {
-    fragment.appendChild(window.galleryRenderPictures.renderPictures(window.data.photosArray[i]));
-  }
-  pictures.appendChild(fragment);
+  window.data.requestLoad();
 
   var openGalleryOverlay = function (src, likes, comments) {
     galleryOverlay.classList.remove('hidden');
