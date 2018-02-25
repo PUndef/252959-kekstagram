@@ -2,6 +2,7 @@
 
 (function () {
 
+
   var ESC_KEYCODE = 27;
 
   window.util = {
@@ -19,6 +20,15 @@
       if (evt.keyCode === ESC_KEYCODE) {
         action();
       }
+    },
+    shuffleArray: function (array) {
+      for (var i = array.length - 1; i > 0; i--) {
+        var b = Math.floor(Math.random() * (i + 1));
+        var a = array[i];
+        array[i] = array[b];
+        array[b] = a;
+      }
+      return array;
     }
   };
 
