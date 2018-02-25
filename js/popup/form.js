@@ -20,7 +20,7 @@
 
   formUpload.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.data.uploadData(new FormData(formUpload));
+    window.data.request.uploadData(new FormData(formUpload));
   });
 
 })();

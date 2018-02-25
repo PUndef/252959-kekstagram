@@ -6,7 +6,7 @@
   var pictures = document.querySelector('.pictures');
   var fragment = document.createDocumentFragment();
 
-  window.galleryRenderPictures = {
+  window.gallery = {
     renderPictures: function (photos) {
       for (var i = 0; i < photos.length; i++) {
         var picture = pictureTemplate.cloneNode(true);

@@ -6,7 +6,7 @@
   var galleryOverlay = document.querySelector('.gallery-overlay');
   var galleryOverlayClose = document.querySelector('.gallery-overlay-close');
 
-  window.data.requestLoad();
+  window.data.request.requestLoad();
 
   var openGalleryOverlay = function (src, likes, comments) {
     galleryOverlay.classList.remove('hidden');
