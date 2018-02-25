@@ -3,6 +3,7 @@
 (function () {
   var modal = document.querySelector('.modal-overlay');
   var modalContent = document.querySelector('.modal-overlay-content');
+  var filters = document.querySelector('.filters');
 
   var onError = function (message) {
     modalContent.textContent = message;
@@ -12,11 +13,13 @@
     }, 2000);
   };
 
-  window.data = {
+  window.data.request = {
     requestLoad: function () {
 
       var onSuccess = function (data) {
-        window.galleryRenderPictures.renderPictures(data);
+        window.gallery.renderPictures(data);
+        filters.classList.remove('filters-inactive');
+        window.data.request.rawData = data;
       };
 
       window.backend.load('GET', 'https://js.dump.academy/kekstagram/data', onSuccess, onError, '');
@@ -28,7 +31,8 @@
       };
 
       window.backend.load('POST', 'https://js.dump.academy/kekstagram', onSuccess, onError, data);
-    }
+    },
+    rawData: []
   };
 
 })();
