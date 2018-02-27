@@ -16,15 +16,21 @@
     document.addEventListener('keydown', window.popup.onPopupEscPress);
   };
 
+  var getDataForGalleryOverlay = function (elem) {
+    var dataGallery = {
+      comments: elem.querySelector('.picture-comments').textContent,
+      likes: elem.querySelector('.picture-likes').textContent,
+      src: elem.querySelector('img').getAttribute('src')
+    };
+    openGalleryOverlay(dataGallery.src, dataGallery.likes, dataGallery.comments);
+  };
+
   var onEnterPress = function (evt) {
-    var pictureFocus = document.querySelector('.pictures .picture:focus');
-    var src = pictureFocus.querySelector('img').getAttribute('src');
-    var likes = pictureFocus.querySelector('.picture-likes').textContent;
-    var comments = pictureFocus.querySelector('.picture-comments').textContent;
     var isEnterEvent = window.util.isEnterEvent(evt);
     if (isEnterEvent === true) {
       evt.preventDefault();
-      openGalleryOverlay(src, likes, comments);
+      var elem = pictures.querySelector('.picture:focus');
+      getDataForGalleryOverlay(elem);
     }
   };
 
@@ -32,11 +38,8 @@
 
   pictures.addEventListener('click', function (evt) {
     evt.preventDefault();
-    var elem = evt.target;
-    var comments = elem.nextElementSibling.querySelector('.picture-comments').textContent;
-    var likes = elem.nextElementSibling.querySelector('.picture-likes').textContent;
-    var src = evt.target.getAttribute('src');
-    openGalleryOverlay(src, likes, comments);
+    var elem = evt.target.parentNode;
+    getDataForGalleryOverlay(elem);
   });
 
   galleryOverlayClose.addEventListener('click', function () {
