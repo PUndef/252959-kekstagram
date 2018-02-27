@@ -15,7 +15,11 @@
         picture.querySelector('.picture-comments').textContent = photos[i].comments.length;
         fragment.appendChild(picture);
       }
+      pictures.innerHTML = '';
       pictures.appendChild(fragment);
+    },
+    renderPicturesFilter: function () {
+      window.gallery.renderPictures(window.data.filter.dataArray);
     }
   };
 
