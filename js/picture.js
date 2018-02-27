@@ -16,6 +16,20 @@
     document.addEventListener('keydown', window.popup.onPopupEscPress);
   };
 
+  var onEnterPress = function (evt) {
+    var pictureFocus = document.querySelector('.pictures .picture:focus');
+    var src = pictureFocus.querySelector('img').getAttribute('src');
+    var likes = pictureFocus.querySelector('.picture-likes').textContent;
+    var comments = pictureFocus.querySelector('.picture-comments').textContent;
+    var isEnterEvent = window.util.isEnterEvent(evt);
+    if (isEnterEvent === true) {
+      evt.preventDefault();
+      openGalleryOverlay(src, likes, comments);
+    }
+  };
+
+  pictures.addEventListener('keydown', onEnterPress);
+
   pictures.addEventListener('click', function (evt) {
     evt.preventDefault();
     var elem = evt.target;
