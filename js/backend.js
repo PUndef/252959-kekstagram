@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+
+  var xhrTimeout = 10000; // 10s
+
   window.backend = {
     load: function (method, url, onSuccess, onError, data) {
       var xhr = new XMLHttpRequest();
@@ -23,7 +26,7 @@
         onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
       });
 
-      xhr.timeout = 10000; // 10s
+      xhr.timeout = xhrTimeout;
 
       if (method === 'POST') {
         xhr.open('POST', url);

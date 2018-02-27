@@ -4,13 +4,14 @@
   var modal = document.querySelector('.modal-overlay');
   var modalContent = document.querySelector('.modal-overlay-content');
   var filters = document.querySelector('.filters');
+  var errorMessageTimeout = 2000;
 
   var onError = function (message) {
     modalContent.textContent = message;
     modal.classList.remove('hidden');
     setTimeout(function () {
       modal.classList.add('hidden');
-    }, 2000);
+    }, errorMessageTimeout);
   };
 
   window.data.request = {

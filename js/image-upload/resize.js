@@ -5,9 +5,10 @@
   var effectImagePreview = document.querySelector('.effect-image-preview');
 
   var stepResizeValue = 25;
-  var uploadResizeValue = document.querySelector('.upload-resize-controls-value');
   var uploadResizeMinValue = 25;
   var uploadResizeMaxValue = 100;
+  var scaleProportion = 1 / 100;
+  var uploadResizeValue = document.querySelector('.upload-resize-controls-value');
   var decreaseUploadImageSize = document.querySelector('.upload-resize-controls-button-dec');
   var increaseUploadImageSize = document.querySelector('.upload-resize-controls-button-inc');
 
@@ -31,7 +32,7 @@
   window.imageUploadResize = {
     changeUploadImagesSize: function (currentUploadResizeValue) {
       uploadResizeValue.value = currentUploadResizeValue + '%';
-      effectImagePreview.style.transform = 'scale(' + currentUploadResizeValue / 100 + ')';
+      effectImagePreview.style.transform = 'scale(' + currentUploadResizeValue * scaleProportion + ')';
     }
   };
 

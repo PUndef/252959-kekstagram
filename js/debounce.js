@@ -2,7 +2,7 @@
 
 (function () {
   var DEBOUNCE_INTERVAL = 300; // ms
-  var TROTLING_INTERVAL = 500; // ms
+  var THROTTLING_INTERVAL = 500; // ms
 
   var lastTimeout;
   var throttlingTimeout;
@@ -13,7 +13,7 @@
       throttlingTimeout = window.setTimeout(function () {
         isThrottle = false;
         fun();
-      }, TROTLING_INTERVAL);
+      }, THROTTLING_INTERVAL);
     } else {
       if (lastTimeout) {
         window.clearTimeout(lastTimeout);
