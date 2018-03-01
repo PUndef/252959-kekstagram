@@ -20,7 +20,7 @@
       var onSuccess = function (data) {
         window.gallery.renderPictures(data);
         filters.classList.remove('filters-inactive');
-        window.data.request.rawData = data;
+        window.data.request.rawDatas = data;
       };
 
       window.backend.load('GET', 'https://js.dump.academy/kekstagram/data', onSuccess, onError, '');
@@ -33,7 +33,7 @@
 
       window.backend.load('POST', 'https://js.dump.academy/kekstagram', onSuccess, onError, data);
     },
-    rawData: []
+    rawDatas: []
   };
 
 })();
